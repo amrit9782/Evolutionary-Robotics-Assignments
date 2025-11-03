@@ -1,4 +1,4 @@
-import random 
+import random
 
 # Target string
 TARGET_STRING = "charles darwin was always seasick"
@@ -6,15 +6,28 @@ TARGET_LENGTH = len(TARGET_STRING)
 CHARACTERS = "abcdefghijklmnopqrstuvwxyz "
 
 # fitness function 
-def calculate_fitness(candidate):
+def calculate_fitness(candidate: str) -> int:
     '''Calculates the fitness by comparing the candidate string to the target string, character by character.'''
+    if len(candidate) != TARGET_LENGTH:
+        raise ValueError(f"Candidate string length {len(candidate)} does not match target length {TARGET_LENGTH}")
     score = 0
     for i in range(TARGET_LENGTH):
         if candidate[i] == TARGET_STRING[i]:
             score += 1
     return score
 
-def random_string(length):
+def mutate(parent_string: str) -> str:
+    '''Mutates a single character in the parent string to a new, different character.'''
+    index_to_mutate = random.randrange(TARGET_LENGTH)
+    original_char = parent_string[index_to_mutate]
+    
+    new_char = original_char
+    while new_char == original_char:
+        new_char = random.choice(CHARACTERS)
+
+    return parent_string[:index_to_mutate] + new_char + parent_string[index_to_mutate+1:]
+
+def random_string(length: int) -> str:
     '''Generates a random string of given length'''
     return "".join(random.choice(CHARACTERS) for _ in range(length))
 
@@ -31,13 +44,7 @@ def run_simulation():
 
         generation += 1                                 # increment generation count
 
-        # Mutate the current string
-        index_to_mutate = random.randint(0, TARGET_LENGTH - 1)  # choose a random index to mutate
-        new_char = random.choice(CHARACTERS)                    # choose a new random character
-        new_string_list = list(current_string)                  # create a new mutated string
-        new_string_list[index_to_mutate] = new_char
-        new_string = "".join(new_string_list)
-
+        new_string = mutate(current_string)
         # Evaluate
         new_fitness = calculate_fitness(new_string)
 
@@ -56,8 +63,8 @@ if __name__ == "__main__":
     print(f"Running {num_runs} simulations...")
 
     for i in range(num_runs):
-        generations = run_simulation()
-        generations_counts.append(generations)
+        generation = run_simulation()
+        generations_counts.append(generation)
         if (i + 1) % 10 == 0: 
              print(f"Completed run {i+1}/{num_runs}")
              

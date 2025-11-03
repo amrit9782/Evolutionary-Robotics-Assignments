@@ -15,10 +15,10 @@ walls = [
     pygame.Rect(0, arena_size - wall_thickness, arena_size, wall_thickness),     # Bottom
     pygame.Rect(arena_size - wall_thickness, 0, wall_thickness, arena_size),     # Right 
     # Obstacles
-    pygame.Rect(0, 0.7 * arena_size, 0.3 * arena_size, wall_thickness),
-    pygame.Rect(0.7 * arena_size, 0.4 * arena_size, 0.3 * arena_size, wall_thickness),
-    pygame.Rect(0.5 * arena_size, 0, wall_thickness, 0.4 * arena_size),
-    pygame.Rect(0.5 * arena_size, 0.6 * arena_size, wall_thickness, 0.4 * arena_size),
+    pygame.Rect(0, int(0.7 * arena_size), int(0.3 * arena_size), wall_thickness),
+    pygame.Rect(int(0.7 * arena_size), int(0.4 * arena_size), int(0.3 * arena_size), wall_thickness),
+    pygame.Rect(int(0.5 * arena_size), 0, wall_thickness, int(0.4 * arena_size)),
+    pygame.Rect(int(0.5 * arena_size), int(0.6 * arena_size), wall_thickness, int(0.4 * arena_size)),
 ]
 
 grid_resolution = 0.01 * arena_size
@@ -54,12 +54,12 @@ def get_wheel_speeds(genome, sensor_readings):
     v_l_raw = m0 * s_l + c0
     v_r_raw = m1 * s_r + c1 + m2 * s_m + c2
 
-    # v_l = v_l_raw
-    # v_r = v_r_raw
+    v_l = v_l_raw
+    v_r = v_r_raw
 
     # Clamp speeds to min/max
-    v_l = max(min_wheel_speed, min(max_wheel_speed, v_l_raw))
-    v_r = max(min_wheel_speed, min(max_wheel_speed, v_r_raw))
+    # v_l = max(min_wheel_speed, min(max_wheel_speed, v_l_raw))
+    # v_r = max(min_wheel_speed, min(max_wheel_speed, v_r_raw))
 
     return v_l, v_r
 
@@ -109,7 +109,7 @@ def evaluate_genome(genome, step_count=0, visualize=False):
         clock = pygame.time.Clock()
         pygame.display.set_caption("Evaluating Genome...")
 
-    # Run simulation loop
+    # Run simulation loop for 1000 steps
     running = True
     step_count = step_count
     while running and step_count < simulation_steps:
@@ -206,14 +206,14 @@ def evaluate_genome(genome, step_count=0, visualize=False):
     
     # Calculate final fitness
     base_fitness = len(visited_cells)
-    collided_fitness = base_fitness * fitness_multiplier
+    # collided_fitness = base_fitness * fitness_multiplier
 
-    displacement = math.sqrt((final_x - start_x)**2 + (final_y - start_y)**2)
-    displacement_bonus = displacement * displacement_bonus
+    # displacement = math.sqrt((final_x - start_x)**2 + (final_y - start_y)**2)
+    # displacement_bonus = displacement * displacement_bonus
     
-    final_fitness = collided_fitness + displacement_bonus
+    # final_fitness = collided_fitness + displacement_bonus
 
-    return final_fitness, current_trajectory
+    return base_fitness, current_trajectory
 
 if __name__ == "__main__":
     # hill climber params
@@ -261,7 +261,6 @@ if __name__ == "__main__":
 
     print("\nEvaluating the best genome with visualization...")
         
-    pygame.quit()   
     final_fitness, final_trajectory = evaluate_genome(best_genome, visualize=True)
 
     # plotting
@@ -298,7 +297,7 @@ if __name__ == "__main__":
         ax.legend()
         
         # Save the plot (update path as needed)
-        plot_filename = "./Assignment 2/hill_climber_proximity_best_trajectory.png"
+        plot_filename = "./Assignment-2/hill_climber_proximity_best_trajectory.png"
         plt.savefig(plot_filename, dpi=300)
         print(f"Trajectory plot saved as {plot_filename}")
         plt.show()
