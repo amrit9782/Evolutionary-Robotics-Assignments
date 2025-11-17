@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # --- Hyperparameters ---
-DATA_FILE = './Assignment 3/data2'
+DATA_FILE = './Assignment-3/data2'
 POP_SIZE = 100                  # Population size
 GENOME_LENGTH = 9               # Three weights: [w0, w1, w2]
 GENERATIONS = 300               # Number of generations to run
@@ -111,7 +111,7 @@ def plot_fitness_progress(log_best_fitness, log_avg_fitness):
     plt.title("Evolutionary Algorithm Fitness Progress (Multilayer)")
     plt.legend()
     plt.grid(True)
-    plt.savefig("./Assignment 3/ex2_op_fitness_plot_data2.png")
+    plt.savefig("./Assignment-3/ex2/ex2_op_fitness_plot_data2.png")
     plt.show()
 
 def plot_classifier_multilayer(best_genome, data):
@@ -163,7 +163,7 @@ def plot_classifier_multilayer(best_genome, data):
     plt.title("Data and Evolved Classifier (Multilayer)")
     plt.legend()
     plt.grid(True)
-    plt.savefig("./Assignment 3/ex2_op_classifier_plot_data2.png")
+    plt.savefig("./Assignment-3/ex2/ex2_op_classifier_plot_data2.png")
     plt.show()
 
 # main loop

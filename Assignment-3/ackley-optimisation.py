@@ -35,10 +35,12 @@ def run_generation(population):
 
     # Replacement strategy: elitism (top X% individuals are kept without crossover/mutation for next generation)
     # keep first X% as elites
-    num_elites = int(POPULATION_SIZE * 0.2)
+    num_elites = int(POPULATION_SIZE * 0.1)
     elites = best_individuals[:num_elites].copy()
     crossover_point = 1  # Crossover after the first gene
     for i in range(num_elites, POPULATION_SIZE, 2):  # Crossover last (worst) 100-X% individuals
+        if i+1 >= POPULATION_SIZE:
+            break
         parent1 = best_individuals[i]
         parent2 = best_individuals[i+1]
         child1 = np.concatenate((parent1[:crossover_point], parent2[crossover_point:]))
@@ -78,9 +80,10 @@ if __name__ == "__main__":
     plt.plot(avg_fittness_points, label='Average Fittness')
     plt.xlabel('Generation')
     plt.ylabel('Fitness')
-    plt.title('Ackley Function Optimization using Evolutionary Algorithms')
+    plt.title(f'Ackley Fn Optimization for {NUM_GENERATIONS} Generations and Population {POPULATION_SIZE}')
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
+    #plt.savefig('./Assignment-3/ackley-fitness-plot.png', dpi=300)
     plt.show()
 

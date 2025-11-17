@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{Evolutionary Robotics - Assignment 3}
+\author{Amritanshu Amrit, Bhavesh Gandhi}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Task 1: Classical optimization with evolutionary algorithms}
+
+\subsection{Implementation}
+We implemented an evolutionary algorithm to solve the Ackley problem in three dimensions. The implementation can be found in the file \texttt{ackley-optimisation.py}.
+
+\subsection{Fitness Plot}
+The following plot (Figure \ref{fig:ackley_fitness}) shows the best and average fitness over 1000 generations.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ackley_fitness.png}
+    \caption{Best and average fitness for the Ackley function optimization.}
+    \label{fig:ackley_fitness}
+\end{figure}
+
+\begin{itemize}
+    \item \textit{Best Fitness:} The blue line shows that the algorithm is working as intended. It progressively finds better solutions, causing the fitness to jump up in steps. The fact that it plateaus around a fitness of 0.65 indicates the algorithm has likely converged to a good local optimum, but not the absolute best solution (the global optimum).
+    \item \textit{Average Fitness:} The orange line shows the average fitness of the entire population. It rises slightly and then flattens out at a low value. This, combined with the high best fitness, suggests that a small group of elite individuals is driving the progress, while the majority of the population is not converging towards the optimal solution.
+\end{itemize}
+
+\subsection{Parameter Tuning}
+We tested various parameters for the evolutionary algorithm. The final parameters used are:
+\begin{itemize}
+    \item Population size: 1000
+    \item Number of generations: 10000
+    \item Elitism: 10\%
+    \item Crossover: Single point
+    \item Mutation rate: 20\%
+\end{itemize}
+These parameters were chosen because they provided a good balance between exploration and exploitation, allowing the algorithm to consistently find a good solution. A lower population size or a very low mutation rate often resulted in the algorithm getting stuck. A higher mutation rate introduced too much randomness, preventing the algorithm from converging to the optimal solution.
+
+Figure \ref{fig:ackley_fitness_low} shows an example with population $11$ run over $1000$ generations. It shows that the function plateaus prematurely and at a much lower fitness of $0.225$
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ackley_fitness_low.png}
+    \caption{Best and average fitness for the Ackley function incomplete optimization.}
+    \label{fig:ackley_fitness_low}
+\end{figure}
+
+\section{Task 2: Optimal classification with evolutionary algorithms}
+
+\subsection{Implementation}
+We implemented an evolutionary algorithm to evolve a simple ANN for a binary classification task. The implementation can be found in the file \texttt{ex2/ex2\_ann\_classifier.py}. The fitness evolution and results can also be seen in the text files \texttt{ex2/ex2\_ann\_classifier.txt}.
+
+\subsection{Fitness Plot}
+The following plot shows the best and average fitness over 100 generations.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ex2_fitness_plot.png}
+    \caption{Best and average fitness for the ANN classifier.}
+    \label{fig:ann_fitness}
+\end{figure}
+
+\subsection{Best Weights and Classifier Plot}
+The best weights found by the algorithm are:
+\begin{itemize}
+    \item w0 (bias): -2.8835
+    \item w1 (x-weight): 2.8466
+    \item w2 (y-weight): 2.7764
+\end{itemize}
+
+The following plot shows the data points and the decision boundary of the evolved classifier.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ex2_classifier_plot.png}
+    \caption{Data and evolved classifier.}
+    \label{fig:ann_classifier}
+\end{figure}
+
+\subsection{Optional Task: Classification with a more complex dataset}
+
+\subsubsection{Implementation}
+For the optional task, we used a more complex dataset that is not linearly separable. To handle this, we implemented a multi-layer ANN with one hidden layer containing two neurons. The evolutionary algorithm was tasked with finding the 9 weights for this network. The implementation can be found in the file \texttt{ex2/ex2\_op\_ann\_classifier.py}. The evolution and final results can be seen the the file \texttt{ex2/ex2\_op\_ann\_classifier.txt}.
+
+\subsubsection{Fitness Plot}
+The Figure \ref{fig:ann_op_fitness} shows the best and average fitness over 300 generations.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ex2_op_fitness_plot_data2}
+    \caption{Best and average fitness for the multilayer ANN classifier.}
+    \label{fig:ann_op_fitness}
+\end{figure}
+
+\subsubsection{Best Weights and Classifier Plot}
+The best weights found by the algorithm are:
+\begin{itemize}
+    \item h1\_w0: 2.3397, h1\_w1: -1.9873, h1\_w2: -1.7921
+    \item h2\_w0: -1.6181, h2\_w1: 1.4844, h2\_w2: 2.8663
+    \item o\_w0: -2.1063, o\_w1: 4.2518, o\_w2: 3.26
+\end{itemize}
+
+The Figure \ref{fig:ann_op_classifier} shows the data points and the decision boundary of the evolved classifier.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ex2_op_classifier_plot_data2}
+    \caption{Data and evolved multilayer classifier.}
+    \label{fig:ann_op_classifier}
+\end{figure}
+
+The algorithm was able to find a set of weights that correctly classifies 179 out of 180 data points. The non-linear decision boundary created by the multi-layer ANN is able to separate the two classes with high accuracy.
+
+
+\end{document}

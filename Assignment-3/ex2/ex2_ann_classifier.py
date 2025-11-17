@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # --- Hyperparameters ---
-DATA_FILE = './Assignment 3/data'
+DATA_FILE = './Assignment-3/data'
 POP_SIZE = 50               # Population size
 GENOME_LENGTH = 3           # Three weights: [w0, w1, w2]
 GENERATIONS = 100           # Number of generations to run
@@ -94,7 +94,7 @@ def plot_fitness_progress(log_best_fitness, log_avg_fitness):
     plt.title("Evolutionary Algorithm Fitness Progress")
     plt.legend()
     plt.grid(True)
-    plt.savefig("./Assignment 3/ex2_fitness_plot.png")
+    plt.savefig("./Assignment-3/ex2/ex2_fitness_plot.png")
     plt.show()
 
 def plot_classifier(best_genome, data):
@@ -134,7 +134,7 @@ def plot_classifier(best_genome, data):
     plt.title("Data and Evolved Classifier")
     plt.legend()
     plt.grid(True)
-    plt.savefig("./Assignment 3/ex2_classifier_plot.png")
+    plt.savefig("./Assignment-3/ex2/ex2_classifier_plot.png")
     plt.show()
 
 # main loop
